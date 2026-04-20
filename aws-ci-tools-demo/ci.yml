@@ -1,0 +1,26 @@
+version: 0.1
+
+env:
+  parameter-store:
+    DOCKER_USERNAME: /app/docker/username
+    DOCKER_PASSWORD: /app/docker/password
+    DOCKER_URL: /app/docker/url
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r aws-ci-tools-demo/requirements.txt
+  build:
+    commands:
+      - echo "Running tests..."
+      - cd aws-ci-tools-demo/
+      - echo "Building Docker image..."
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_URL"
+      - docker build -t "$DOCKER_URL/$DOCKER_USERNAME/aws-ci-tools-demo:latest" .
+      - docker push "$DOCKER_URL/$DOCKER_USERNAME/aws-ci-tools-demo:latest"
+  post_build:
+    commands:
+      - echo "Build completed successfully!"
