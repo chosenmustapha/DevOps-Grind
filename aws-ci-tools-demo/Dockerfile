@@ -3,7 +3,7 @@ FROM python:3.8-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY requirement.txt .
 
 RUN pip install -r requirement.txt
 
