@@ -12,7 +12,7 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies..."
-      - pip install -r aws-ci-tools-demo/requirements.txt
+      - pip install -r aws-ci-tools-demo/requirement.txt
   build:
     commands:
       - echo "Running tests..."
